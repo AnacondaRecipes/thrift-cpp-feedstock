@@ -20,6 +20,8 @@ source:
 
 build:
   number: 0
+  # boost is not available for this version on s390x
+  skip: True # [s390x]
   run_exports:
     - {{ pin_subpackage("libthrift", max_pin="x.x") }}
   ignore_run_exports:
