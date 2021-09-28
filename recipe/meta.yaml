@@ -87,6 +87,8 @@ outputs:
       ignore_run_exports:
         - zlib
         - openssl
+        - libthrift
+        - libevent
     requirements:
       build:
         - {{ compiler("c") }}
