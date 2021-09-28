@@ -22,9 +22,6 @@ build:
   number: 0
   run_exports:
     - {{ pin_subpackage("libthrift", max_pin="x.x.x") }}
-  ignore_run_exports:
-    - zlib
-    - openssl
 
 requirements:
   build:
@@ -54,9 +51,6 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage("libthrift", max_pin="x.x.x") }}
-      ignore_run_exports:
-        - zlib
-        - openssl
     requirements:
       build:
         - {{ compiler("c") }}
