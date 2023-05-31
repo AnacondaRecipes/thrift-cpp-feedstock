@@ -20,13 +20,8 @@ source:
 
 build:
   number: 0
-  # boost is not available for this version on s390x
-  skip: True # [s390x]
   run_exports:
     - {{ pin_subpackage("libthrift", max_pin="x.x") }}
-  ignore_run_exports:
-    - zlib
-    - openssl
 
 requirements:
   build:
@@ -43,10 +38,10 @@ requirements:
     - ninja
     - m2-patch        # [win]
   host:
-    - boost-cpp
-    - libevent        # [unix]
-    - openssl
-    - zlib
+    - boost-cpp {{ boost_cpp }}
+    - libevent 2.1.12  # [unix]
+    - openssl {{ openssl }}
+    - zlib {{ zlib }}
 
 outputs:
   - name: libthrift
@@ -55,9 +50,6 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage("libthrift", max_pin="x.x") }}
-      ignore_run_exports:
-        - zlib
-        - openssl
     requirements:
       build:
         - {{ compiler("c") }}
@@ -72,13 +64,15 @@ outputs:
         - ninja
         - m2-patch        # [win]
       host:
-        - boost-cpp
-        - libevent        # [unix]
-        - openssl
-        - zlib
+        - boost-cpp {{ boost_cpp }}
+        - libevent 2.1.12  # [unix]
+        - openssl {{ openssl }}
+        - zlib {{ zlib }}
       run:
-        - openssl
+        - openssl 3.*
         - zlib
+        - libevent
+        - boost-cpp >={{ boost_cpp }}
     test:
       commands:
         - test ! -f $PREFIX/bin/thrift                                      # [unix]
@@ -93,11 +87,6 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage("libthrift", max_pin="x.x") }}
-      ignore_run_exports:
-        - zlib
-        - openssl
-        - libevent  # [unix]
-        - libthrift
     requirements:
       build:
         - {{ compiler("c") }}
@@ -113,10 +102,10 @@ outputs:
         - m2-patch        # [win]
       host:
         - {{ pin_subpackage("libthrift", exact=true) }}
-        - boost-cpp
-        - libevent        # [unix]
-        - openssl
-        - zlib
+        - boost-cpp {{ boost_cpp }}
+        - libevent 2.1.12  # [unix]
+        - openssl {{ openssl }}
+        - zlib {{ zlib }}
       run:
         - {{ pin_subpackage("libthrift", exact=true) }}
     test:
