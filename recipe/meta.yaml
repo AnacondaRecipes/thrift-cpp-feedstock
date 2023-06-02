@@ -13,8 +13,10 @@ source:
       - thrift-0.13.0-windows-fixes.patch  # [win]
   {% if win %}
   - url: https://github.com/lexxmark/winflexbison/releases/download/v{{ WIN_FLEX_BIZON_VERSION }}/win_flex_bison-{{ WIN_FLEX_BIZON_VERSION }}.zip
+    sha256: 8d751f31eb8d79251d809f37bb0d853d72f58a21c5f672d5e31f35b4d97b31fe
     folder: thirdparty\dist\winflexbison
   - url: https://github.com/nmathewson/Libevent/archive/release-{{ LIBEVENT_VERSION }}-stable.zip
+    sha256: 70158101eab7ed44fd9cc34e7f247b3cae91a8e4490745d9d6eb7edc184e4d96
     folder: thirdparty\src\libevent
   {% endif %}
 
