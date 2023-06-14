@@ -7,26 +7,23 @@ package:
   version: {{ version }}
 
 source:
-  - url: http://archive.apache.org/dist/thrift/{{ version }}/thrift-{{ version }}.tar.gz
+  - url: https://archive.apache.org/dist/thrift/{{ version }}/thrift-{{ version }}.tar.gz
     sha256: d5883566d161f8f6ddd4e21f3a9e3e6b8272799d054820f1c25b11e86718f86b
     patches:
       - thrift-0.13.0-windows-fixes.patch  # [win]
   {% if win %}
   - url: https://github.com/lexxmark/winflexbison/releases/download/v{{ WIN_FLEX_BIZON_VERSION }}/win_flex_bison-{{ WIN_FLEX_BIZON_VERSION }}.zip
+    sha256: 8d751f31eb8d79251d809f37bb0d853d72f58a21c5f672d5e31f35b4d97b31fe
     folder: thirdparty\dist\winflexbison
   - url: https://github.com/nmathewson/Libevent/archive/release-{{ LIBEVENT_VERSION }}-stable.zip
+    sha256: 70158101eab7ed44fd9cc34e7f247b3cae91a8e4490745d9d6eb7edc184e4d96
     folder: thirdparty\src\libevent
   {% endif %}
 
 build:
-  number: 0
-  # boost is not available for this version on s390x
-  skip: True # [s390x]
+  number: 1
   run_exports:
     - {{ pin_subpackage("libthrift", max_pin="x.x") }}
-  ignore_run_exports:
-    - zlib
-    - openssl
 
 requirements:
   build:
@@ -43,10 +40,10 @@ requirements:
     - ninja
     - m2-patch        # [win]
   host:
-    - boost-cpp
-    - libevent        # [unix]
-    - openssl
-    - zlib
+    - boost-cpp {{ boost_cpp }}
+    - libevent 2.1.12  # [unix]
+    - openssl {{ openssl }}
+    - zlib {{ zlib }}
 
 outputs:
   - name: libthrift
@@ -55,9 +52,6 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage("libthrift", max_pin="x.x") }}
-      ignore_run_exports:
-        - zlib
-        - openssl
     requirements:
       build:
         - {{ compiler("c") }}
@@ -72,13 +66,15 @@ outputs:
         - ninja
         - m2-patch        # [win]
       host:
-        - boost-cpp
-        - libevent        # [unix]
-        - openssl
-        - zlib
+        - boost-cpp {{ boost_cpp }}
+        - libevent 2.1.12  # [unix]
+        - openssl {{ openssl }}
+        - zlib {{ zlib }}
       run:
-        - openssl
+        - openssl 3.*
         - zlib
+        - libevent
+        - boost-cpp >={{ boost_cpp }}
     test:
       commands:
         - test ! -f $PREFIX/bin/thrift                                      # [unix]
@@ -93,11 +89,6 @@ outputs:
     build:
       run_exports:
         - {{ pin_subpackage("libthrift", max_pin="x.x") }}
-      ignore_run_exports:
-        - zlib
-        - openssl
-        - libevent  # [unix]
-        - libthrift
     requirements:
       build:
         - {{ compiler("c") }}
@@ -113,10 +104,10 @@ outputs:
         - m2-patch        # [win]
       host:
         - {{ pin_subpackage("libthrift", exact=true) }}
-        - boost-cpp
-        - libevent        # [unix]
-        - openssl
-        - zlib
+        - boost-cpp {{ boost_cpp }}
+        - libevent 2.1.12  # [unix]
+        - openssl {{ openssl }}
+        - zlib {{ zlib }}
       run:
         - {{ pin_subpackage("libthrift", exact=true) }}
     test:
@@ -136,11 +127,16 @@ outputs:
         - {{ pin_subpackage("thrift-compiler", exact=true) }}
 
 about:
-  home: http://thrift.apache.org
+  home: https://thrift.apache.org
   license: Apache-2.0
+  license_family: Apache
   license_file: LICENSE
   summary: >-
     Compiler and C++ libraries and headers for the Apache Thrift RPC system
+  description: >-
+    Compiler and C++ libraries and headers for the Apache Thrift RPC system
+  doc_url: https://thrift.apache.org/docs/
+  dev_url: https://github.com/apache/thrift
 
 extra:
   recipe-maintainers:
