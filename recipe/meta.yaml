@@ -71,7 +71,7 @@ outputs:
         - openssl {{ openssl }}
         - zlib {{ zlib }}
       run:
-        - openssl 3.*
+        - openssl {{ openssl }}
         - zlib
         - libevent
         - boost-cpp >={{ boost_cpp }}
