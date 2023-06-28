@@ -71,7 +71,7 @@ outputs:
         - openssl {{ openssl }}
         - zlib {{ zlib }}
       run:
-        - openssl {{ openssl }}
+        - openssl  # exact pin handled through openssl run_exports
         - zlib
         - libevent
         - boost-cpp >={{ boost_cpp }}
