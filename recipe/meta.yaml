@@ -120,11 +120,11 @@ outputs:
         - {{ pin_subpackage("libthrift", max_pin="x.x") }}
     requirements:
       host:
-        - {{ pin_subpackage("libthrift", exact=true) }}
-        - {{ pin_subpackage("thrift-compiler", exact=true) }}
+        - {{ pin_subpackage("libthrift", max_pin="x.x.x") }}
+        - {{ pin_subpackage("thrift-compiler", max_pin="x.x.x") }}
       run:
-        - {{ pin_subpackage("libthrift", exact=true) }}
-        - {{ pin_subpackage("thrift-compiler", exact=true) }}
+        - {{ pin_subpackage("libthrift", max_pin="x.x.x") }}
+        - {{ pin_subpackage("thrift-compiler", max_pin="x.x.x") }}
 
 about:
   home: https://thrift.apache.org
