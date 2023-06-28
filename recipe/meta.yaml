@@ -120,15 +120,11 @@ outputs:
         - {{ pin_subpackage("libthrift", max_pin="x.x") }}
     requirements:
       host:
-        - {{ pin_subpackage("libthrift", exact=true) }}
-        - {{ pin_subpackage("thrift-compiler", exact=true) }}
-        # openssl needs to be added here so it can be used for the sha calculation
-        # otherwise, only one metapackage will be built.
-        # This can be removed as soon as openssl 1.1.1 is dropped
-        - openssl {{ openssl }}
+        - {{ pin_subpackage("libthrift", max_pin="x.x.x") }}
+        - {{ pin_subpackage("thrift-compiler", max_pin="x.x.x") }}
       run:
-        - {{ pin_subpackage("libthrift", exact=true) }}
-        - {{ pin_subpackage("thrift-compiler", exact=true) }}
+        - {{ pin_subpackage("libthrift", max_pin="x.x.x") }}
+        - {{ pin_subpackage("thrift-compiler", max_pin="x.x.x") }}
 
 about:
   home: https://thrift.apache.org
