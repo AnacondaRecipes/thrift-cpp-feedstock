@@ -29,6 +29,7 @@ requirements:
   build:
     - libtool  # [unix]
     - {{ compiler("c") }}
+    - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
     - bison           # [unix]
     - cmake
@@ -55,6 +56,7 @@ outputs:
     requirements:
       build:
         - {{ compiler("c") }}
+        - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
         - bison           # [unix]
         - cmake
@@ -91,6 +93,7 @@ outputs:
     requirements:
       build:
         - {{ compiler("c") }}
+        - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
         - bison           # [unix]
         - cmake
