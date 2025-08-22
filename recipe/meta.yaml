@@ -39,7 +39,6 @@ requirements:
     - pkg-config      # [unix]
     - make            # [unix]
     - ninja
-    - m2-patch        # [win]
   host:
     - libboost-headers {{ libboost }}
     - libevent 2.1.12  # [unix]
@@ -75,7 +74,7 @@ outputs:
       run:
         - openssl  # exact pin handled through openssl run_exports
         - zlib
-        - libevent
+        - libevent # [unix]
     test:
       commands:
         - test ! -f $PREFIX/bin/thrift                                      # [unix]
