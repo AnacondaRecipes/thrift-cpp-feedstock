@@ -21,7 +21,7 @@ source:
   {% endif %}
 
 build:
-  number: 2
+  number: 3
   run_exports:
     - {{ pin_subpackage("libthrift", max_pin="x.x") }}
 
@@ -40,7 +40,7 @@ requirements:
     - ninja
     - m2-patch        # [win]
   host:
-    - boost-cpp {{ boost_cpp }}
+    - libboost-headers {{ libboost }}
     - libevent 2.1.12  # [unix]
     - openssl {{ openssl }}
     - zlib {{ zlib }}
@@ -66,7 +66,7 @@ outputs:
         - ninja
         - m2-patch        # [win]
       host:
-        - boost-cpp {{ boost_cpp }}
+        - libboost-headers {{ libboost }}
         - libevent 2.1.12  # [unix]
         - openssl {{ openssl }}
         - zlib {{ zlib }}
@@ -74,7 +74,6 @@ outputs:
         - openssl  # exact pin handled through openssl run_exports
         - zlib
         - libevent
-        - boost-cpp >={{ boost_cpp }}
     test:
       commands:
         - test ! -f $PREFIX/bin/thrift                                      # [unix]
@@ -104,7 +103,7 @@ outputs:
         - m2-patch        # [win]
       host:
         - {{ pin_subpackage("libthrift", exact=true) }}
-        - boost-cpp {{ boost_cpp }}
+        - libboost-headers {{ libboost }}
         - libevent 2.1.12  # [unix]
         - openssl {{ openssl }}
         - zlib {{ zlib }}
