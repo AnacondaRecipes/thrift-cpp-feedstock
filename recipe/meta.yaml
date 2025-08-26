@@ -21,7 +21,7 @@ source:
   {% endif %}
 
 build:
-  number: 2
+  number: 3
   run_exports:
     - {{ pin_subpackage("libthrift", max_pin="x.x") }}
 
@@ -29,6 +29,7 @@ requirements:
   build:
     - libtool  # [unix]
     - {{ compiler("c") }}
+    - {{ stdlib("c") }}
     - {{ compiler("cxx") }}
     - bison           # [unix]
     - cmake
@@ -38,9 +39,8 @@ requirements:
     - pkg-config      # [unix]
     - make            # [unix]
     - ninja
-    - m2-patch        # [win]
   host:
-    - boost-cpp {{ boost_cpp }}
+    - libboost-headers {{ libboost }}
     - libevent 2.1.12  # [unix]
     - openssl {{ openssl }}
     - zlib {{ zlib }}
@@ -55,6 +55,7 @@ outputs:
     requirements:
       build:
         - {{ compiler("c") }}
+        - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
         - bison           # [unix]
         - cmake
@@ -64,17 +65,15 @@ outputs:
         - pkg-config      # [unix]
         - make            # [unix]
         - ninja
-        - m2-patch        # [win]
       host:
-        - boost-cpp {{ boost_cpp }}
+        - libboost-headers {{ libboost }}
         - libevent 2.1.12  # [unix]
         - openssl {{ openssl }}
         - zlib {{ zlib }}
       run:
         - openssl  # exact pin handled through openssl run_exports
         - zlib
-        - libevent
-        - boost-cpp >={{ boost_cpp }}
+        - libevent # [unix]
     test:
       commands:
         - test ! -f $PREFIX/bin/thrift                                      # [unix]
@@ -92,6 +91,7 @@ outputs:
     requirements:
       build:
         - {{ compiler("c") }}
+        - {{ stdlib("c") }}
         - {{ compiler("cxx") }}
         - bison           # [unix]
         - cmake
@@ -101,10 +101,9 @@ outputs:
         - pkg-config      # [unix]
         - make            # [unix]
         - ninja
-        - m2-patch        # [win]
       host:
         - {{ pin_subpackage("libthrift", exact=true) }}
-        - boost-cpp {{ boost_cpp }}
+        - libboost-headers {{ libboost }}
         - libevent 2.1.12  # [unix]
         - openssl {{ openssl }}
         - zlib {{ zlib }}
