@@ -45,6 +45,7 @@ cmake -GNinja ^
       -DBoost_NO_BOOST_CMAKE=ON ^
       -DBUILD_TESTING=OFF ^
       -DBUILD_SHARED_LIBS=ON ^
+      -DLIB_INSTALL_DIR=%LIBRARY_PREFIX%\lib ^
       "%SRC_DIR%"
 if errorlevel 1 exit 1
 
