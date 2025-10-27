@@ -1,9 +1,6 @@
 #!/bin/env bash
-# Get an updated config.sub and config.guess
-cp $BUILD_PREFIX/share/libtool/build-aux/config.* .
 
-set -e
-set -x
+set -exo pipefail
 
 BOOST_ROOT=$PREFIX
 ZLIB_ROOT=$PREFIX
@@ -15,9 +12,7 @@ export M4="$(which m4)"
 
 pushd "$SRC_DIR"
 
-mkdir cmake-build
-pushd cmake-build
-cmake ${CMAKE_ARGS} \
+cmake -B build ${CMAKE_ARGS} -S "$SRC_DIR" \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DBUILD_SHARED_LIBS=ON \
     -DBUILD_PYTHON=OFF \
@@ -30,17 +25,7 @@ cmake ${CMAKE_ARGS} \
     -DCMAKE_FIND_ROOT_PATH="$PREFIX" \
     -DBUILD_TESTING=OFF \
     -DBoost_INCLUDE_DIRS=${PREFIX}/include \
-    -GNinja \
-    ..
+    -DBUILD_TUTORIALS=OFF \
+    -GNinja
 
-# Be explicit about tutorials being unwanted.
-# Somehow this gets overriden on first run.
-cmake -DBUILD_TUTORIALS=OFF .
-
-# Decrease parallelism a bit as we will otherwise get out-of-memory problems
-# This is only necessary on Travis
-if [ "$(uname -m)" = "ppc64le" ]; then
-    ninja -j1
-else
-    ninja
-fi
+cmake --build build

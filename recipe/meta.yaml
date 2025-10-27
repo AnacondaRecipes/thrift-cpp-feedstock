@@ -1,47 +1,36 @@
-{% set version = "0.15.0" %}
-{% set WIN_FLEX_BIZON_VERSION = "2.5.20" %}
-{% set LIBEVENT_VERSION = "2.1.8" %}
+{% set name = "thrift" %}
+{% set version = "0.22.0" %}
 
 package:
-  name: thrift-split
+  name: {{ name }}-split
   version: {{ version }}
 
 source:
-  - url: https://archive.apache.org/dist/thrift/{{ version }}/thrift-{{ version }}.tar.gz
-    sha256: d5883566d161f8f6ddd4e21f3a9e3e6b8272799d054820f1c25b11e86718f86b
+  - url: https://archive.apache.org/dist/{{ name }}/{{ version }}/{{ name }}-{{ version }}.tar.gz
+    sha256: 794a0e455787960d9f27ab92c38e34da27e8deeda7a5db0e59dc64a00df8a1e5
     patches:
-      - thrift-0.13.0-windows-fixes.patch  # [win]
-  {% if win %}
-  - url: https://github.com/lexxmark/winflexbison/releases/download/v{{ WIN_FLEX_BIZON_VERSION }}/win_flex_bison-{{ WIN_FLEX_BIZON_VERSION }}.zip
-    sha256: 8d751f31eb8d79251d809f37bb0d853d72f58a21c5f672d5e31f35b4d97b31fe
-    folder: thirdparty\dist\winflexbison
-  - url: https://github.com/nmathewson/Libevent/archive/release-{{ LIBEVENT_VERSION }}-stable.zip
-    sha256: 70158101eab7ed44fd9cc34e7f247b3cae91a8e4490745d9d6eb7edc184e4d96
-    folder: thirdparty\src\libevent
-  {% endif %}
+      - patches/0003-Thrift-itself-needs-GlobalOutput.patch          # [win]
 
 build:
-  number: 4
+  number: 0
   run_exports:
     - {{ pin_subpackage("libthrift", max_pin="x.x") }}
 
 requirements:
   build:
-    - libtool  # [unix]
-    - {{ compiler("c") }}
     - {{ stdlib("c") }}
+    - {{ compiler("c") }}
     - {{ compiler("cxx") }}
-    - bison           # [unix]
     - cmake
+    - ninja-base
+    - msys2-bison        # [win]
+    - msys2-flex         # [win]
+    - bison           # [unix]
     - flex            # [unix]
-    - libtool         # [unix]
-    - m4              # [unix]
     - pkg-config      # [unix]
-    - make            # [unix]
-    - ninja
   host:
     - libboost-headers {{ libboost }}
-    - libevent 2.1.12  # [unix]
+    - libevent {{ libevent }}  # [unix]
     - openssl {{ openssl }}
     - zlib {{ zlib }}
 
@@ -54,25 +43,24 @@ outputs:
         - {{ pin_subpackage("libthrift", max_pin="x.x") }}
     requirements:
       build:
-        - {{ compiler("c") }}
         - {{ stdlib("c") }}
+        - {{ compiler("c") }}
         - {{ compiler("cxx") }}
-        - bison           # [unix]
         - cmake
+        - ninja-base
+        - msys2-bison        # [win]
+        - msys2-flex         # [win]
+        - bison           # [unix]
         - flex            # [unix]
-        - libtool         # [unix]
-        - m4              # [unix]
         - pkg-config      # [unix]
-        - make            # [unix]
-        - ninja
       host:
         - libboost-headers {{ libboost }}
-        - libevent 2.1.12  # [unix]
+        - libevent {{ libevent }}  # [unix]
         - openssl {{ openssl }}
         - zlib {{ zlib }}
       run:
-        - openssl  # exact pin handled through openssl run_exports
         - zlib
+        - openssl  # exact pin handled through openssl run_exports
         - libevent # [unix]
     test:
       commands:
@@ -90,21 +78,20 @@ outputs:
         - {{ pin_subpackage("libthrift", max_pin="x.x") }}
     requirements:
       build:
-        - {{ compiler("c") }}
         - {{ stdlib("c") }}
+        - {{ compiler("c") }}
         - {{ compiler("cxx") }}
-        - bison           # [unix]
         - cmake
+        - ninja-base
+        - msys2-bison        # [win]
+        - msys2-flex         # [win]
+        - bison           # [unix]
         - flex            # [unix]
-        - libtool         # [unix]
-        - m4              # [unix]
         - pkg-config      # [unix]
-        - make            # [unix]
-        - ninja
       host:
         - {{ pin_subpackage("libthrift", exact=true) }}
         - libboost-headers {{ libboost }}
-        - libevent 2.1.12  # [unix]
+        - libevent {{ libevent }}  # [unix]
         - openssl {{ openssl }}
         - zlib {{ zlib }}
       run:
@@ -130,11 +117,11 @@ about:
   license: Apache-2.0
   license_family: Apache
   license_file: LICENSE
-  summary: >-
+  summary: |
     Compiler and C++ libraries and headers for the Apache Thrift RPC system
-  description: >-
+  description: |
     Compiler and C++ libraries and headers for the Apache Thrift RPC system
-  doc_url: https://thrift.apache.org/docs/
+  doc_url: https://thrift.apache.org/docs
   dev_url: https://github.com/apache/thrift
 
 extra:

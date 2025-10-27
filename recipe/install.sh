@@ -2,7 +2,7 @@
 
 set -exo pipefail
 
-pushd cmake-build
+pushd build
 ninja install
 
 if [[ "$PKG_NAME" == libthrift ]]; then
