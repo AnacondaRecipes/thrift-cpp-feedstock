@@ -1,8 +1,8 @@
 anaconda_config_version: 1
 upstream_sources:
   - webpage:
-      url: https://dlcdn.apache.org/thrift/{}/thrift-{}.tar.gz
-      regex: (?:.*)thrift-(.*)\.tar\.gz
+      url: https://thrift.apache.org/download
+      regex: thrift-([\d.]+)\.tar\.gz
     packages:
       - libthrift
       - thrift-compiler
