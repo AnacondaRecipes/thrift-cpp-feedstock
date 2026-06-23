@@ -1,5 +1,5 @@
 {% set name = "thrift" %}
-{% set version = "0.22.0" %}
+{% set version = "0.23.0" %}
 
 package:
   name: {{ name }}-split
@@ -7,9 +7,9 @@ package:
 
 source:
   - url: https://archive.apache.org/dist/{{ name }}/{{ version }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 794a0e455787960d9f27ab92c38e34da27e8deeda7a5db0e59dc64a00df8a1e5
+    sha256: 1859d932d2ae1f13d16c5a196931208c116310a5ff50f2bfd11d3db03be8f46f
     patches:
-      - patches/0003-Thrift-itself-needs-GlobalOutput.patch          # [win]
+      - patches/0003-Thrift-itself-needs-GlobalOutput.patch  # [win]
 
 build:
   number: 0
@@ -23,11 +23,11 @@ requirements:
     - {{ compiler("cxx") }}
     - cmake
     - ninja-base
-    - msys2-bison        # [win]
-    - msys2-flex         # [win]
-    - bison           # [unix]
-    - flex            # [unix]
-    - pkg-config      # [unix]
+    - msys2-bison  # [win]
+    - msys2-flex  # [win]
+    - bison  # [unix]
+    - flex  # [unix]
+    - pkg-config  # [unix]
   host:
     - libboost-headers {{ libboost }}
     - libevent {{ libevent }}  # [unix]
@@ -48,11 +48,11 @@ outputs:
         - {{ compiler("cxx") }}
         - cmake
         - ninja-base
-        - msys2-bison        # [win]
-        - msys2-flex         # [win]
-        - bison           # [unix]
-        - flex            # [unix]
-        - pkg-config      # [unix]
+        - msys2-bison  # [win]
+        - msys2-flex  # [win]
+        - bison  # [unix]
+        - flex  # [unix]
+        - pkg-config  # [unix]
       host:
         - libboost-headers {{ libboost }}
         - libevent {{ libevent }}  # [unix]
@@ -61,15 +61,15 @@ outputs:
       run:
         - zlib
         - openssl  # exact pin handled through openssl run_exports
-        - libevent # [unix]
+        - libevent  # [unix]
     test:
       commands:
-        - test ! -f $PREFIX/bin/thrift                                      # [unix]
-        - test -f $PREFIX/lib/libthrift${SHLIB_EXT}                         # [unix]
-        - test -f $PREFIX/include/thrift/Thrift.h                           # [unix]
+        - test ! -f $PREFIX/bin/thrift  # [unix]
+        - test -f $PREFIX/lib/libthrift${SHLIB_EXT}  # [unix]
+        - test -f $PREFIX/include/thrift/Thrift.h  # [unix]
         - if not exist %PREFIX%\\Library\\include\\thrift\\Thrift.h exit 1  # [win]
-        - if exist %PREFIX%\\Library\\bin\\thrift.exe exit 1                # [win]
-        - if not exist %PREFIX%\\Library\\lib\\thriftmd.lib exit 1          # [win]
+        - if exist %PREFIX%\\Library\\bin\\thrift.exe exit 1  # [win]
+        - if not exist %PREFIX%\\Library\\lib\\thriftmd.lib exit 1  # [win]
   - name: thrift-compiler
     script: install.sh  # [unix]
     script: install.bat  # [not unix]
@@ -83,11 +83,11 @@ outputs:
         - {{ compiler("cxx") }}
         - cmake
         - ninja-base
-        - msys2-bison        # [win]
-        - msys2-flex         # [win]
-        - bison           # [unix]
-        - flex            # [unix]
-        - pkg-config      # [unix]
+        - msys2-bison  # [win]
+        - msys2-flex  # [win]
+        - bison  # [unix]
+        - flex  # [unix]
+        - pkg-config  # [unix]
       host:
         - {{ pin_subpackage("libthrift", exact=true) }}
         - libboost-headers {{ libboost }}
@@ -98,7 +98,7 @@ outputs:
         - {{ pin_subpackage("libthrift", exact=true) }}
     test:
       commands:
-        - test -f $PREFIX/bin/thrift                              # [unix]
+        - test -f $PREFIX/bin/thrift  # [unix]
         - if not exist %PREFIX%\\Library\\bin\\thrift.exe exit 1  # [win]
   - name: thrift-cpp
     build:
