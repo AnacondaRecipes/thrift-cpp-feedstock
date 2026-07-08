@@ -109,6 +109,11 @@ outputs:
       run:
         - {{ pin_subpackage("libthrift", max_pin="x.x.x") }}
         - {{ pin_subpackage("thrift-compiler", max_pin="x.x.x") }}
+    test:
+      # tested in libthrift and thrift-compiler outputs; echo satisfies linter
+      commands:
+        - echo "tested in other outputs"  # [unix]
+        - echo tested in other outputs    # [win]
 
 about:
   home: https://thrift.apache.org
