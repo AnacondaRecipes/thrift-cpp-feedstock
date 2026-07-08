@@ -1,15 +1,13 @@
 {% set name = "thrift" %}
-{% set version = "0.22.0" %}
+{% set version = "0.23.0" %}
 
 package:
   name: {{ name }}-split
   version: {{ version }}
 
 source:
-  - url: https://archive.apache.org/dist/{{ name }}/{{ version }}/{{ name }}-{{ version }}.tar.gz
-    sha256: 794a0e455787960d9f27ab92c38e34da27e8deeda7a5db0e59dc64a00df8a1e5
-    patches:
-      - patches/0003-Thrift-itself-needs-GlobalOutput.patch          # [win]
+  url: https://archive.apache.org/dist/{{ name }}/{{ version }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 1859d932d2ae1f13d16c5a196931208c116310a5ff50f2bfd11d3db03be8f46f
 
 build:
   number: 0
